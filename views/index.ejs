@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Agbalumo&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Taken</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1 class="title">Taken</h1>
+
+    <button class="generate" onclick="game.generate()">
+      <div class="wave"></div>
+      <div>Generate random image</div>
+    </button>
+
+    <span class="or">or</span>
+
+    <div class="form">
+      <textarea class="input" placeholder="Your prompt..."></textarea>
+
+      <button class="form-submit generate" onclick="myGenerate()">
+        <div class="wave"></div>
+        <div>Generate</div>
+      </button>
+    </div>
+
+    <div class="img-preview-body">
+      <img src="" alt="" class="img-preview" onclick="preview()">
+
+      <div class="img-preview-scale">
+
+        <img src="" alt="" class="img-preview">
+      </div>
+    </div>
+
+    <!-- <img src="" alt="" style="width: 40px; height: 40px;" class="art" > -->
+    <div class="game-body">
+      <div class="main">
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/script.js"></script>
+<script>
+  const game = new Game({
+    weight: 600,
+    permission: 4,
+    body: ".main"
+  })
+
+  const previews = document.querySelectorAll('.img-preview')
+  game.on("url", (url) => {
+    previews.forEach(el => {
+      el.src = url
+    })
+  })
+
+  function preview() {
+    document.querySelector(".img-preview-scale").classList.add("active")
+  }
+
+  document.querySelector('.img-preview-scale').addEventListener("click", close)
+
+  function close(event) {
+    if (event.target.classList.contains("img-preview-scale")) {
+      document.querySelector(".img-preview-scale").classList.remove("active")
+    }
+  }
+
+  function myGenerate() {
+    const input = document.querySelector(".input")
+    game.generate(input.value)
+  }
+
+
+</script>
+
+</html>
